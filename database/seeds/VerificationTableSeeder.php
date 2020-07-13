@@ -14,7 +14,7 @@ class VerificationTableSeeder extends Seeder
         //'user_id','photoURL','videoURL','status'
         \App\Verification::truncate();
         $faker = \Faker\Factory::create();
-        for($i = 0; $i < 1500; $i++){
+        for($i = 0; $i < 150; $i++){
             \App\Verification::create([
                 'user_id' => $faker->numberBetween($min = 1, $max = 500),
                 'photoURL' => $faker->imageUrl($width = 640, $height = 480),

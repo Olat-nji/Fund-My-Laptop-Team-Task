@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
         $password = Hash::make('test123');
         $roles = array('user','admin');
 
-        for($i = 0; $i < 500; $i++){
+        for($i = 0; $i < 150; $i++){
             $role = $roles[mt_rand(0,count($roles) - 1)];
             \App\User::create([
                 'firstName' => $faker->name,

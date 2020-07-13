@@ -16,7 +16,7 @@ class TransactionTableSeeder extends Seeder
         $response_code = [201, 404];
 
         $faker = Faker\Factory::create();
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 150; $i++) {
             $rand_index = array_rand($status);
             $transaction = new Transaction();
 

@@ -13,7 +13,7 @@ class AccrualsTableSeeder extends Seeder
     {
         \App\Accrual::truncate();
         $faker = \Faker\Factory::create();
-        for($i = 0; $i < 1500; $i++){
+        for($i = 0; $i < 150; $i++){
             \App\Accrual::create([
                 'request_id' => $faker->numberBetween($min = 1, $max = 1500),
                 'rate' => 200,
