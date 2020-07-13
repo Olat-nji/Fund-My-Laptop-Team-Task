@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.3.1 - 2020-07-07
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#44](https://github.com/laminas/laminas-diactoros/pull/44) fixes an issue whereby the uploaded file size was being provided as an integer string, and causing type errors. The value is now cast to integer before creating an `UploadedFile` instance.
+
 ## 2.3.0 - 2020-04-27
 
 ### Added
