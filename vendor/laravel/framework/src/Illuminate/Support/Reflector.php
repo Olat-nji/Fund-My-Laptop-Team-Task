@@ -23,14 +23,8 @@ class Reflector
 
         $name = $type->getName();
 
-        if (! is_null($class = $parameter->getDeclaringClass())) {
-            if ($name === 'self') {
-                return $class->getName();
-            }
-
-            if ($name === 'parent' && $parent = $class->getParentClass()) {
-                return $parent->getName();
-            }
+        if ($name === 'self') {
+            return $parameter->getDeclaringClass()->getName();
         }
 
         return $name;

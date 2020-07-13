@@ -113,10 +113,6 @@ class Configuration
      */
     public function setInternalClassMethodParamMap($class, $method, array $map)
     {
-        if (\PHP_MAJOR_VERSION > 7) {
-            throw new \LogicException('Internal class parameter overriding is not available in PHP 8. Incompatible signatures have been reclassified as fatal errors.');
-        }
-
         if (!isset($this->_internalClassParamMap[strtolower($class)])) {
             $this->_internalClassParamMap[strtolower($class)] = array();
         }
@@ -124,7 +120,7 @@ class Configuration
     }
 
     /**
-     * Remove all overridden parameter maps from internal PHP classes.
+     * Remove all overriden parameter maps from internal PHP classes.
      */
     public function resetInternalClassMethodParamMaps()
     {
@@ -134,7 +130,7 @@ class Configuration
     /**
      * Get the parameter map of an internal PHP class method
      *
-     * @return array|null
+     * @return array
      */
     public function getInternalClassMethodParamMap($class, $method)
     {

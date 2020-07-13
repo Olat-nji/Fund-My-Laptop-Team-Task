@@ -14,7 +14,7 @@ class BlogTableSeeder extends Seeder
         // 'user_id', 'title', 'category', 'image', 'post'
         \App\Blog::truncate();
         $faker = \Faker\Factory::create();
-        for($i = 0; $i < 150; $i++){
+        for($i = 0; $i < 1500; $i++){
             \App\Blog::create([
                 'user_id' => $faker->numberBetween($min = 1, $max = 500),
                 'title' => $faker->text($maxNbChars = 50),

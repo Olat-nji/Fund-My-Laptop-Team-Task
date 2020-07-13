@@ -6,8 +6,7 @@
         "laminas",
         "http",
         "psr",
-        "psr-7",
-        "psr-17"
+        "psr-7"
     ],
     "homepage": "https://laminas.dev",
     "support": {

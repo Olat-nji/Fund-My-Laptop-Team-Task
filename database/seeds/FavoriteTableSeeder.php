@@ -14,7 +14,7 @@ class FavoriteTableSeeder extends Seeder
         //'user_id','request_id'
          \App\Favorite::truncate();
         $faker = \Faker\Factory::create();
-        for($i = 0; $i < 150; $i++){
+        for($i = 0; $i < 1500; $i++){
             \App\Favorite::create([
             	'user_id' => $faker->numberBetween($min = 1, $max = 1500),
                 'request_id' => $faker->numberBetween($min = 1, $max = 1500),

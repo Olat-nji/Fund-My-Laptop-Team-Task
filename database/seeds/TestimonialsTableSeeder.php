@@ -14,7 +14,7 @@ class TestimonialsTableSeeder extends Seeder
         //
         \App\Testimonial::truncate();
         $faker = \Faker\Factory::create();
-        for($i = 0; $i < 150; $i++){
+        for($i = 0; $i < 500; $i++){
             \App\Testimonial::create([
                 'user_id' => $faker->numberBetween($min = 1, $max = 500),
                 'testimonial' => $faker->text($maxNbChars = 200),

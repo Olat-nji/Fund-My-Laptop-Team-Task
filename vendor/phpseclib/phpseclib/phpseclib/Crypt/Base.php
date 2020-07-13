@@ -413,7 +413,7 @@ abstract class Base
      * @var mixed
      * @access private
      */
-    var $use_inline_crypt = true;
+    var $use_inline_crypt;
 
     /**
      * If OpenSSL can be used in ECB but not in CTR we can emulate CTR
@@ -495,6 +495,11 @@ abstract class Base
         }
 
         $this->_setEngine();
+
+        // Determining whether inline crypting can be used by the cipher
+        if ($this->use_inline_crypt !== false) {
+            $this->use_inline_crypt = version_compare(PHP_VERSION, '5.3.0') >= 0 || function_exists('create_function');
+        }
     }
 
     /**
@@ -2597,8 +2602,12 @@ abstract class Base
         }
 
         // Create the $inline function and return its name as string. Ready to run!
-        eval('$func = function ($_action, &$self, $_text) { ' . $init_crypt . 'if ($_action == "encrypt") { ' . $encrypt . ' } else { ' . $decrypt . ' } };');
-        return $func;
+        if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+            eval('$func = function ($_action, &$self, $_text) { ' . $init_crypt . 'if ($_action == "encrypt") { ' . $encrypt . ' } else { ' . $decrypt . ' } };');
+            return $func;
+        }
+
+        return create_function('$_action, &$self, $_text', $init_crypt . 'if ($_action == "encrypt") { ' . $encrypt . ' } else { ' . $decrypt . ' }');
     }
 
     /**

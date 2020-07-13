@@ -27,8 +27,7 @@ if (class_exists('PHPUnit_Framework_TestCase') || version_compare(\PHPUnit\Runne
 }
 abstract class MockeryTestCase extends \PHPUnit\Framework\TestCase
 {
-    use MockeryPHPUnitIntegration;
-    use MockeryTestCaseSetUp;
+    use MockeryPHPUnitIntegration, MockeryTestCaseSetUp;
 
     protected function mockeryTestSetUp()
     {
@@ -36,23 +35,5 @@ abstract class MockeryTestCase extends \PHPUnit\Framework\TestCase
 
     protected function mockeryTestTearDown()
     {
-    }
-
-    public function expectExceptionMessageRegEx($regularExpression)
-    {
-        if (method_exists(get_parent_class(), 'expectExceptionMessageRegExp')) {
-            return parent::expectExceptionMessageRegExp($regularExpression);
-        }
-
-        return $this->expectExceptionMessageMatches($regularExpression);
-    }
-
-    public static function assertMatchesRegEx($pattern, $string, $message = '')
-    {
-        if (method_exists(get_parent_class(), 'assertMatchesRegularExpression')) {
-            parent::assertMatchesRegularExpression($pattern, $string, $message);
-        }
-
-        self::assertRegExp($pattern, $string, $message);
     }
 }

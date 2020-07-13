@@ -15,7 +15,7 @@ class RequestsTableSeeder extends Seeder
         \App\Request::truncate();
         $faker = \Faker\Factory::create();
         $cur = array_rand(array('NGN','USD', 'EUR'));
-        for($i = 0; $i < 150; $i++){
+        for($i = 0; $i < 1500; $i++){
             \App\Request::create([
                 'user_id' => $faker->numberBetween($min = 1, $max = 500),
                 'title' => $faker->text($maxNbChars = 50),

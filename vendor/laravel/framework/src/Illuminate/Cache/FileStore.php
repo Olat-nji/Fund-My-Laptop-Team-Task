@@ -179,9 +179,7 @@ class FileStore implements Store
         }
 
         foreach ($this->files->directories($this->directory) as $directory) {
-            $deleted = $this->files->deleteDirectory($directory);
-
-            if (! $deleted || $this->files->exists($directory)) {
+            if (! $this->files->deleteDirectory($directory)) {
                 return false;
             }
         }

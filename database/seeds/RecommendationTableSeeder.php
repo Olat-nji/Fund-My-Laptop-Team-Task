@@ -14,7 +14,7 @@ class RecommendationTableSeeder extends Seeder
         //'user_id','statement'
          \App\Recommendation::truncate();
         $faker = \Faker\Factory::create();
-        for($i = 0; $i < 150; $i++){
+        for($i = 0; $i < 1500; $i++){
             \App\Recommendation::create([
                 'user_id' => $faker->numberBetween($min = 1, $max = 500),
                 'statement' => $faker->text($maxNbChars = 150),
