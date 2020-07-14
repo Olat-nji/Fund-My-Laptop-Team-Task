@@ -169,7 +169,7 @@
                         </div>
                         <div class="account__block--details">
                             <small>Average Investment</small><br>
-                            <h2><span>INR</span>{{$transactions->avg('amount')}}</h2>
+                            <h2><span>NGN</span>{{$transactions->avg('amount')}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Average Interest</small><br>
@@ -197,19 +197,20 @@
                             <td>LOAN</td>
                             <td>AMOUNT</td>
                             <td>INTEREST RATE</td>
-                            <td>TERM</td>
+                            <td>REPAYMENTS LEFT</td>
                             <td>TOTAL RETURNS</td>
                             <td>PAYMENT DUE</td>
                             <td>STATUS</td>
                             </thead>
                             <tbody>
-                                @foreach($transactions as $invests)
+                                @foreach($transactions as $invests )
                                 <tr>
-                                    <td>#{{$invests->transaction_ref }}hi</td>
-                                    <td>{{$invests->request->currency }}NGN {{$invests->amount }}</td>
-                                    <td>{{$invests->user->accrual->avg('rate') }}%</td>
-                                    <td>10</td>
-                                    <td>INR {{$invests->request->repayment->amount }}</td>
+                                    <td>#{{$invests->request_id }}</td>
+                                    <td>{{$invests->request->currency }} {{$invests->amount }}</td>
+                                    <td>{{$invests->request->accrual->avg('rate') }}%</td>
+                                    <td>{{ $invests->request->repayment->last()->num_repayments_left }}</td>
+                                    <td>{{$invests->request->currency }} 
+                                        {{$invests->request->repayment->sum('amount_paid') }}</td>
                                     <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
                                     <td>Active</td>
                                 </tr>
