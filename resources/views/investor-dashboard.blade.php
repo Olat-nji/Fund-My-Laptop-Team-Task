@@ -31,14 +31,14 @@
                                     </div>
                                 </div>
                                 <p style="margin-bottom: 20px;"><b>Loan Amount: ₦{{ $request->amount }}</b></p>
-                                <progress style="margin: 0;" value="{{ ($request->repayment->sum('amount')/$request->amount)*100}}" max="100"></progress>
+                                <progress style="margin: 0;" value="{{ ($request->transaction->sum('amount')/$request->amount)*100}}" max="100"></progress>
                                 <div style="display: flex;">
                                     <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">₦ {{$request->transaction->sum('amount') }} Funded</p>
                                     <div style="flex: 1"></div>
-                                    <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦{{ $request->amount - $request->repayment->sum('amount') }} Left</p>
+                                    <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦{{ $request->amount - $request->transaction->sum('amount') }} Left</p>
                                 </div>
                                 <form action="{{ url('invest') }}" method='POST'>
-                                    <input type="hidden" name="amount_invested" value="{{ $request->amount - $request->repayment->sum('amount') }}">
+                                    <input type="hidden" name="amount_invested" value="{{ $request->amount - $request->transaction->sum('amount') }}">
                                     <input type="hidden" name="request_id" value="{{ $request->id }}">
                                 <button class="
                                 @if($request->transaction->sum('amount')<0)
