@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Request as FundRequest;
 use App\User;
+use App\Transaction;
+use App\Repayment;
+use App\Accrual;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -113,7 +117,22 @@ class PagesController extends Controller
 
     public function investorDashboard()
     {
-        return view('investor-dashboard');
+        // if(Auth::check()==True) {
+    // $user_id=Auth::user()->id();   
+        $user_id=22;   
+        $user = User::find($user_id);
+        $transactiontotal=array_sum(json_decode(Transaction::where([['user_id',$user_id],['status','success']])->pluck('amount')));
+        $requests=FundRequest::all();
+  
+    $transactions = Transaction::with(['Request'])->where([['user_id',$user_id],['status','success']])->get();
+    $repaymenttotal=0;
+    foreach( $transactions as  $transaction){
+        $repaymenttotal = array_sum(json_decode( $transaction->request->repayment->pluck('amount_paid')))+$repaymenttotal;
+             
+    }
+    
+   return view('investor-dashboard')->with(compact('transactiontotal','user','repaymenttotal','transactions','requests'));
+    
     }
 
     public function investeeDashboard()
