@@ -10,7 +10,7 @@
         <div class="">
             <main>
                 <section class="user">
-                    <h1 class="user__intro">Welcome Back, <span class="text--secondary">Chandan</span></h1>
+                <h1 class="user__intro">Welcome Back, <span class="text--secondary">{{$user->firstName}}</span></h1>
                     <p>Campaingn available for investing. <span><a class="pink-text" href="#">View More
                                         ></a></span>
                     </p>
@@ -150,27 +150,27 @@
                     <div class="account__block">
                         <div class="account__block--details">
                             <small>Invested Amount</small><br>
-                            <h2><span>INR</span>50,000</h2>
+                            <h2><span>NGN</span>{{$transactiontotal}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Repaid Amount</small><br>
-                            <h2><span>INR</span>20,000</h2>
+                            <h2><span>NGN</span>{{$repaymenttotal}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Remaining Amount</small><br>
-                            <h2><span>INR</span>30,000</h2>
+                            <h2><span>INR</span>{{$transactiontotal-$repaymenttotal}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Investments</small><br>
-                            <h2>6</h2>
+                            <h2>{{$transactions->count()}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Average Investment</small><br>
-                            <h2><span>INR</span>25,000</h2>
+                            <h2><span>NGN</span>{{$transactions->avg('amount')}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Average Interest</small><br>
-                            <h2>2.5<span>%</span></h2>
+                            <h2>{{$user->accrual->avg('rate')}}<span>%</span></h2>
                         </div>
                     </div>
                     <div class="account__progress">
@@ -194,57 +194,26 @@
                             <td>LOAN</td>
                             <td>AMOUNT</td>
                             <td>INTEREST RATE</td>
-                            <td>TERM</td>
+                            <td>REPAYMENTS LEFT</td>
                             <td>TOTAL RETURNS</td>
                             <td>PAYMENT DUE</td>
                             <td>STATUS</td>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>#7646446</td>
-                                <td>INR 50,000</td>
-                                <td>2.5%</td>
-                                <td>10</td>
-                                <td>INR 1,250</td>
-                                <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
-                                <td>Active</td>
-                            </tr>
-                            <tr>
-                                <td>#7646446</td>
-                                <td>INR 50,000</td>
-                                <td>2.5%</td>
-                                <td>10</td>
-                                <td>INR 1,250</td>
-                                <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
-                                <td>Active</td>
-                            </tr>
-                            <tr>
-                                <td>#7646446</td>
-                                <td>INR 50,000</td>
-                                <td>2.5%</td>
-                                <td>10</td>
-                                <td>INR 1,250</td>
-                                <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
-                                <td>Active</td>
-                            </tr>
-                            <tr>
-                                <td>#7646446</td>
-                                <td>INR 50,000</td>
-                                <td>2.5%</td>
-                                <td>10</td>
-                                <td>INR 1,250</td>
-                                <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
-                                <td>Active</td>
-                            </tr>
-                            <tr>
-                                <td>#7646446</td>
-                                <td>INR 50,000</td>
-                                <td>2.5%</td>
-                                <td>10</td>
-                                <td>INR 1,250</td>
-                                <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
-                                <td>Active</td>
-                            </tr>
+                                @foreach($transactions as $invests )
+                                <tr>
+                                    <td>#{{$invests->request_id }}</td>
+                                    <td>{{$invests->request->currency }} {{$invests->amount }}</td>
+                                    <td>{{$invests->request->accrual->avg('rate') }}%</td>
+                                    <td>{{ $invests->request->repayment->last()->num_repayments_left }}</td>
+                                    <td>{{$invests->request->currency }} 
+                                        {{$invests->request->repayment->sum('amount_paid') }}</td>
+                                    <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
+                                    <td>Active</td>
+                                </tr>
+                                @endforeach
+                         
+                           
                             </tbody>
                         </table>
                     </div>
@@ -292,7 +261,7 @@
             circle.style.strokeDashoffset = offset;
         }
 
-        const progress_value = 40;
+        const progress_value = {{round(($repaymenttotal/$transactiontotal)*100,1) }};
         const displayed_value = document.querySelector('#displayed_value')
         displayed_value.innerHTML = `${progress_value}%`
         setProgress(progress_value);

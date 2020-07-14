@@ -71,11 +71,11 @@
                     @endphp
                     <div class="col-lg-4 mb-4">
                         <div class="card ">
-                            <img class="card-img-top" src="{{ $oldRequest->user->verification->photoURL }}" alt="Card image cap">
+                            <img class="card-img-top" src="{{ $oldRequest->user['verification']['photoURL'] }}" alt="Card image cap">
                             <!-- card body -->
                             <div class="card-body">
                                 <h5 class="card-title mb-0">
-                                    {{ $oldRequest->user->firstName.' '.$oldRequest->user->lastName }}
+                                    {{ $oldRequest->user['firstName'].' '.$oldRequest['user']['lastName'] }}
                                 </h5>
                                 <span class="card-subtitle ">
                                     {{ $oldRequest->title }}
