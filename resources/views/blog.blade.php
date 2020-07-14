@@ -11,7 +11,7 @@
         <h1 class="text-center">Recent News</h1>
         <p class="text-center">Read through our Blog</p>
         <div class="row">
-        @foreach($blogs as $blog) 
+            @foreach($blogs as $blog) 
                 <div class="col-md-4">
                     <div class="single-blog">
                         <p class="blog-meta">By Admin<span>{{ date('F d, Y', strtotime($blog->created_at)) }}</span></p>

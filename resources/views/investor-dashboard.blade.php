@@ -19,131 +19,33 @@
                     <div class="left-arrow">
                         <i id="left-button" class="fa fa-chevron-left" aria-hidden="true"></i>
                     </div>
-                    <div class="user-financials">
-                        <div style="margin-left: 20px;">
-                            <div class="user-details">
-                                <img src="../img/Ellipse_43.png" alt="A" style="height: 60px; width: 60px;">
-                                <div style="margin-left: 10px;">
-                                    <h1 style="font-size: 24px; line-height: 24px; margin-bottom: 0;">John Doe
-                                    </h1>
-                                    <p style="margin: 0;">Intern</p>
-                                </div>
-                            </div>
-                            <p style="margin-bottom: 20px;"><b>Loan Amount: $1,000</b></p>
-                            <progress style="margin: 0;" value="70" max="100"></progress>
-                            <div style="display: flex;">
-                                <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">$700 Funded</p>
-                                <div style="flex: 1"></div>
-                                <p
-                                    style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;">
-                                    $300 Left</p>
-                            </div>
-                            <button>
-                                Invest Now
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="user-financials">
-                        <div style="margin-left: 20px;">
-                            <div class="user-details">
-                                <img src="../img/Ellipse_44.png" alt="A" style="height: 60px; width: 60px;">
-                                <div style="margin-left: 10px;">
-                                    <h1 style="font-size: 24px; line-height: 24px; margin-bottom: 0;">John Doe
-                                    </h1>
-                                    <p style="margin: 0;">Intern</p>
+                    @foreach($requests as $request)
+                        <div class="user-financials">
+                            <div style="margin-left: 20px;">
+                                <div class="user-details">
+                                    <img src="{{ $request->photoURL }}" alt="A" style="height: 60px; width: 60px;">
+                                    <div style="margin-left: 10px;">
+                                        <h1 style="font-size: 24px; line-height: 24px; margin-bottom: 0;">{{ $request->user->name }}</h1>
+                                        <p style="margin: 0;">Intern</p>
+                                    </div>
                                 </div>
+                                <p style="margin-bottom: 20px;"><b>Loan Amount: ₦{{ $request->amount }}</b></p>
+                                <progress style="margin: 0;" value="{{ ($request->transaction->sum('amount')/$request->amount)*100}}" max="100"></progress>
+                                <div style="display: flex;">
+                                    <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">₦ {{$request->transaction->sum('amount') }} Funded</p>
+                                    <div style="flex: 1"></div>
+                                    <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦{{ $request->amount - $request->transaction->sum('amount') }} Left</p>
+                                </div>
+                                <button>
+                                    Invest Now
+                                </button>
                             </div>
-                            <p style="margin-bottom: 20px;"><b>Loan Amount: $1,000</b></p>
-                            <progress style="margin: 0;" value="70" max="100"></progress>
-                            <div style="display: flex;">
-                                <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">$700 Funded</p>
-                                <div style="flex: 1"></div>
-                                <p
-                                    style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;">
-                                    $300 Left</p>
-                            </div>
-                            <button>
-                                Invest Now
-                            </button>
                         </div>
-                    </div>
+                    @endforeach
 
-                    <div class="user-financials">
-                        <div style="margin-left: 20px;">
-                            <div class="user-details">
-                                <img src="../img/Ellips_ 46.png" alt="A" style="height: 60px; width: 60px;">
-                                <div style="margin-left: 10px;">
-                                    <h1 style="font-size: 24px; line-height: 24px; margin-bottom: 0;">Jane Doe
-                                    </h1>
-                                    <p style="margin: 0;">Intern</p>
-                                </div>
-                            </div>
-                            <p style="margin-bottom: 20px;"><b>Loan Amount: $1,000</b></p>
-                            <progress style="margin: 0;" value="70" max="100"></progress>
-                            <div style="display: flex;">
-                                <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">$700 Funded</p>
-                                <div style="flex: 1"></div>
-                                <p
-                                    style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;">
-                                    $300 Left</p>
-                            </div>
-                            <button>
-                                Invest Now
-                            </button>
-                        </div>
-                    </div>
+                 
 
-                    <div class="user-financials">
-                        <div style="margin-left: 20px;">
-                            <div class="user-details">
-                                <img src="../img/Ellipse_47.png" alt="A" style="height: 60px; width: 60px;">
-                                <div style="margin-left: 10px;">
-                                    <h1 style="font-size: 24px; line-height: 24px; margin-bottom:0px;">Jane Doe
-                                    </h1>
-                                    <p style="margin: 0;">Intern</p>
-                                </div>
-                            </div>
-                            <p style="margin-bottom: 20px;"><b>Loan Amount: $1,000</b></p>
-                            <progress style="margin: 0;" value="70" max="100"></progress>
-                            <div style="display: flex;">
-                                <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">$700 Funded</p>
-                                <div style="flex: 1"></div>
-                                <p
-                                    style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;">
-                                    $300 Left</p>
-                            </div>
-                            <button>
-                                Invest Now
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="user-financials">
-                        <div style="margin-left: 20px;">
-                            <div class="user-details">
-                                <img src="../img/Ellipse_48.png" alt="A"
-                                     style="height: 60px; width: 60px; margin-top: 10px;">
-                                <div style="margin-left: 10px;">
-                                    <h1 style="font-size: 24px; line-height: 24px; margin-bottom: 0px;">John Doe
-                                    </h1>
-                                    <p style="margin: 0;">Intern</p>
-                                </div>
-                            </div>
-                            <p style="margin-bottom: 20px;"><b>Loan Amount: $1,000</b></p>
-                            <progress style="margin: 0;" value="70" max="100"></progress>
-                            <div style="display: flex;">
-                                <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">$700 Funded</p>
-                                <div style="flex: 1"></div>
-                                <p
-                                    style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;">
-                                    $300 Left</p>
-                            </div>
-                            <button>
-                                Invest Now
-                            </button>
-                        </div>
-                    </div>
                     <div class="right-arrow">
                         <i id="right-button" class="fa fa-chevron-right" aria-hidden="true"></i>
                     </div>
