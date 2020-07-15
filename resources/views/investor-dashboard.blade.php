@@ -123,8 +123,14 @@
                                     <td>{{ $invests->request->repayment->last()->num_repayments_left }}</td>
                                     <td>₦ 
                                         {{$invests->request->repayment->sum('amount_paid') }}</td>
-                                    <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
-                                    <td>Active</td>
+                                    <td> <span><b style="font-size: 22px;">27</b></span> {{ $invests->request->repayment->last()->last_payment_date }}</td>
+                                    <td>
+                                        @if($invests->amount == $invests->request->repayment->sum('amount_paid'))
+                                            Inactive
+                                        @else
+                                        Active
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                          

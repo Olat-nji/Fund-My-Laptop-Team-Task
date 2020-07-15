@@ -123,7 +123,7 @@ class PagesController extends Controller
         $user_id=22;   
         $user = User::find($user_id);
         $transactiontotal=array_sum(json_decode(Transaction::where([['user_id',$user_id],['status','success']])->pluck('amount')));
-           $requests=FundRequest::where('isFunded',0)->get();
+           $requests=FundRequest::where([['isFunded',0],['isSuspended', 0],['isActive', 1]])->get();
   
         $transactions = Transaction::with(['Request'])->where([['user_id',$user_id],['status','success']])->get();
         $rate=0;
