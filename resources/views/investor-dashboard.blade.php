@@ -9,6 +9,7 @@
     <div class="container-main">
         <div class="">
             <main>
+                <meta name="csrf-token" content="{{ csrf_token() }}">
                 <section class="user">
                 <h1 class="user__intro">Welcome Back, <span class="text--secondary">{{$user->firstName}}</span></h1>
                     <p>Campaingn available for investing. <span><a class="pink-text" href="#">View More
@@ -38,8 +39,10 @@
                                     <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦ {{ $request->amount - $request->transaction->sum('amount') }} Left</p>
                                 </div>
                                 <form action="{{ url('invest') }}" method='POST'>
+                                    @csrf
                                     <input type="hidden" name="amount_invested" value="{{ $request->amount - $request->transaction->sum('amount') }}">
                                     <input type="hidden" name="request_id" value="{{ $request->id }}">
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                                 <button class="
                                 @if($request->transaction->sum('amount')<0)
                                 disabled
