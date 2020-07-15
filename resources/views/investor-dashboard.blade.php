@@ -2,6 +2,8 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{asset('css/custom-css/investor-dashboard.css')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 @endpush
 
 
@@ -9,7 +11,7 @@
     <div class="container-main">
         <div class="">
             <main>
-                <meta name="csrf-token" content="{{ csrf_token() }}">
+                
                 <section class="user">
                 <h1 class="user__intro">Welcome Back, <span class="text--secondary">{{$user->firstName}}</span></h1>
                     <p>Campaingn available for investing. <span><a class="pink-text" href="#">View More
@@ -38,28 +40,29 @@
                                     <div style="flex: 1"></div>
                                     <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦ {{ $request->amount - $request->transaction->sum('amount') }} Left</p>
                                 </div>
-                                <form action="{{ url('invest') }}" method='POST'>
-                                    @csrf
-                                    <input type="hidden" name="amount_invested" value="{{ $request->amount - $request->transaction->sum('amount') }}">
-                                    <input type="hidden" name="request_id" value="{{ $request->id }}">
-                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                <button class="
-                                @if($request->transaction->sum('amount')<0)
-                                disabled
-                                @endif ">
-                                    Invest Now
-                                </button>
-                            </form>
+                               
+                                   
+                                <a href="{{ url('payment/'.$request->id) }}">
+                                  <button class="
+                                  @if($request->transaction->sum('amount')<0)
+                                  disabled
+                                  @endif ">  Invest Now</button>
+                            </a>
+                          
                             </div>
                         </div>
                     @endforeach
 
                  
 
-                    <div class="right-arrow">
-                        <i id="right-button" class="fa fa-chevron-right" aria-hidden="true"></i>
+                    <div class="right-arrow" >
+                        <i id="right-button" style="display:inline;"class="fa fa-chevron-right" aria-hidden="true"></i>
                     </div>
                 </section><br />
+                @if(session('success')){
+                    {{ session('success') }}
+                }
+                @endif
                 <header class='account-header'>Here is your account overview</header>
                 <section class="account">
                     <div class="account__block">
@@ -81,7 +84,7 @@
                         </div>
                         <div class="account__block--details">
                             <small>Average Investment</small><br>
-                            <h2><span>NGN</span>{{$transactions->avg('amount')}}</h2>
+                            <h2><span>NGN</span>{{round($transactions->avg('amount'),1)}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Average Interest</small><br>
@@ -102,6 +105,9 @@
                     </div>
                 </section>
                 <section class="table">
+                    @isset($status)
+                       {{ $status }} 
+                    @endisset
                     <header>Here is your account overview</header>
                     <div class="table__container">
                         <table>
@@ -120,10 +126,12 @@
                                     <td>#{{$invests->request_id }}</td>
                                     <td>₦ {{$invests->amount }}</td>
                                     <td>{{$invests->request->accrual->avg('rate') }}%</td>
-                                    <td>{{ $invests->request->repayment->last()->num_repayments_left }}</td>
+                                    <td>{{$invests->request->repayment->last()->num_repayments_left ?? '0'}}</td>
                                     <td>₦ 
-                                        {{$invests->request->repayment->sum('amount_paid') }}</td>
-                                    <td> <span><b style="font-size: 22px;"> {{date("d",strtotime($invests->request->repayment->last()->last_payment_date))}} </b></span> {{date("M ,Y",strtotime($invests->request->repayment->last()->last_payment_date))  }}</td>
+                                        {{$invests->request->repayment->sum('amount_paid') ?? '0'}}</td>
+                                    <td> @isset($invests->request->repayment->last()->last_payment_date)
+                                        <span><b style="font-size: 22px;"> {{date("d",strtotime($invests->request->repayment->last()->last_payment_date ?? '')) }} </b></span> {{date("M ,Y",strtotime($invests->request->repayment->last()->last_payment_date ?? 'none'))   }}
+                                    @endisset</td>
                                     <td>
                                         @if($invests->amount == $invests->request->repayment->sum('amount_paid'))
                                             Inactive

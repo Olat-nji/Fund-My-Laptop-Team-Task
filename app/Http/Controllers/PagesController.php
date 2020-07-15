@@ -60,7 +60,7 @@ class PagesController extends Controller
     {
         if(isset($id)){
         $request = FundRequest::whereId($id)->firstOrFail();
-         $userId = $request->user_id;
+         $userId = 22;
          $user = User::whereId($userId)->firstOrFail();
          $firstName = $user->firstName;
          $lastName = $user->lastName;
@@ -131,7 +131,7 @@ class PagesController extends Controller
             $rate=$transaction->request->accrual->avg('rate')+$rate;
 
         }
-        $intrestAverage=$rate/count($transactions);
+        $intrestAverage=round($rate/count($transactions),1);
         $repaymenttotal=0;
         foreach( $transactions as  $transaction){
         $repaymenttotal = array_sum(json_decode( $transaction->request->repayment->pluck('amount_paid')))+$repaymenttotal;       
