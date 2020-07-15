@@ -139,7 +139,7 @@ class PagesController extends Controller
     
         return view('investor-dashboard')->with(compact('transactiontotal','user','repaymenttotal','transactions','requests','intrestAverage'));
 }else{
-    return view('login');   
+    return redirect(url('login'));   
 }
     }
 
