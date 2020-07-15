@@ -131,7 +131,11 @@ class PagesController extends Controller
             $rate=$transaction->request->accrual->avg('rate')+$rate;
 
         }
+        if(count($transactions)>0)
         $intrestAverage=round($rate/count($transactions),1);
+        else{
+            $intrestAverage=0;
+        }
         $repaymenttotal=0;
         foreach( $transactions as  $transaction){
         $repaymenttotal = array_sum(json_decode( $transaction->request->repayment->pluck('amount_paid')))+$repaymenttotal;       
