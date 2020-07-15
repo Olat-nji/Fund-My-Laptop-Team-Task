@@ -105,9 +105,7 @@
                     </div>
                 </section>
                 <section class="table">
-                    @isset($status)
-                       {{ $status }} 
-                    @endisset
+                    
                     <header>Here is your account overview</header>
                     <div class="table__container">
                         <table>
@@ -192,8 +190,9 @@
 
 @if($repaymenttotal>0)
 const progress_value = {{round(($repaymenttotal/$transactiontotal)*100,1) }};
-@endIf
+@else
         const progress_value = 0;
+        @endIf
         const displayed_value = document.querySelector('#displayed_value')
         displayed_value.innerHTML = `${progress_value}%`
         setProgress(progress_value);
