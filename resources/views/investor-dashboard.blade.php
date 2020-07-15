@@ -30,7 +30,7 @@
                                         <p style="margin: 0;">Intern</p>
                                     </div>
                                 </div>
-                                <p style="margin-bottom: 20px;"><b>Loan Amount: ₦{{ $request->amount }}</b></p>
+                                <p style="margin-bottom: 20px;"><b>Loan Amount: ₦ {{ $request->amount }}</b></p>
                                 <progress style="margin: 0;" value="{{ ($request->transaction->sum('amount')/$request->amount)*100}}" max="100"></progress>
                                 <div style="display: flex;">
                                     <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">₦ {{$request->transaction->sum('amount') }} Funded</p>
@@ -115,10 +115,10 @@
                                 @foreach($transactions as $invests )
                                 <tr>
                                     <td>#{{$invests->request_id }}</td>
-                                    <td>{{$invests->request->currency }} {{$invests->amount }}</td>
+                                    <td>₦ {{$invests->amount }}</td>
                                     <td>{{$invests->request->accrual->avg('rate') }}%</td>
                                     <td>{{ $invests->request->repayment->last()->num_repayments_left }}</td>
-                                    <td>{{$invests->request->currency }} 
+                                    <td>₦ 
                                         {{$invests->request->repayment->sum('amount_paid') }}</td>
                                     <td> <span><b style="font-size: 22px;">27</b></span> JUNE</td>
                                     <td>Active</td>
