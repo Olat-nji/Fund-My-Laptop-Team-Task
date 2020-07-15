@@ -40,7 +40,7 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request)
     {
-        $user_id = 22;
+        $user_id = Auth::user()->id;
         $validator = Validator::make($request->all(),
             [
                 'request_id' => 'required|int',

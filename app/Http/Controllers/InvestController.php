@@ -95,7 +95,7 @@ class InvestController extends Controller
 
         if (isset($request['cancelled'])) {
 
-            return redirect(url('investor-dashboard'));
+            return view('transaction-status')->with('status','failed');
         }
 
 
@@ -150,10 +150,13 @@ class InvestController extends Controller
                 curl_setopt($store, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
                 $response = curl_exec($store);
                 curl_close($store);
-                
-                return redirect(url('investor-dashboard'));
+                if(json_decode($response,1)['message']=='transaction record created')
+                return view('transaction-status')->with('status','successful');
+                else{
+                    return view('transaction-status')->with('status','failed');
+                }
             } else {
-                return redirect(url('investor-dashboard'));
+                return view('transaction-status')->with('status','failed');
             }
         }
 

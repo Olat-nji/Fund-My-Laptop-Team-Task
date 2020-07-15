@@ -14,7 +14,7 @@
                 
                 <section class="user">
                 <h1 class="user__intro">Welcome Back, <span class="text--secondary">{{$user->firstName}}</span></h1>
-                    <p>Campaingn available for investing. <span><a class="pink-text" href="{{ url('campaign-grossing') }}">View More
+                    <p>Campaingn available for investing. <span><a class="pink-text" href="{{ url('unfunded-campaigns') }}">View More
                                         ></a></span>
                     </p>
                 </section>

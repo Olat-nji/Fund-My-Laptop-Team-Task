@@ -60,7 +60,7 @@ class PagesController extends Controller
     {
         if(isset($id)){
         $request = FundRequest::whereId($id)->firstOrFail();
-         $userId = 22;
+         $userId = Auth::user()->id;
          $user = User::whereId($userId)->firstOrFail();
          $firstName = $user->firstName;
          $lastName = $user->lastName;
@@ -118,9 +118,9 @@ class PagesController extends Controller
     public function investorDashboard()
     {
 
-        // if(Auth::check()==True) {
-        // $user_id=Auth::user()->id();   
-        $user_id=22;   
+         if(Auth::check()==True) {
+         $user_id=Auth::user()->id;   
+        
         $user = User::find($user_id);
         $transactiontotal=array_sum(json_decode(Transaction::where([['user_id',$user_id],['status','success']])->pluck('amount')));
            $requests=FundRequest::where([['isFunded',0],['isSuspended', 0],['isActive', 1]])->get();
@@ -138,7 +138,9 @@ class PagesController extends Controller
     }
     
         return view('investor-dashboard')->with(compact('transactiontotal','user','repaymenttotal','transactions','requests','intrestAverage'));
-    
+}else{
+    return view('login');   
+}
     }
 
     public function investeeDashboard()
