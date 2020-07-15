@@ -58,6 +58,7 @@ Route::get('signup', 'PagesController@signUp');
 Route::get('total-investment', 'PagesController@totalInvestment');
 Route::get('test-modals', 'PagesController@testModals');
 Route::get('login', 'PagesController@login')->name('login');
+Route::get('logout', 'UserController@logout');
 //login post route
 Route::post('login', 'UserController@login');
 Route::get('sign-up', 'PagesController@sign_up');

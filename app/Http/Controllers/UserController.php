@@ -159,4 +159,18 @@ class UserController extends Controller
             }
          }
     }
+    
+    /**
+     * Logout user (Revoke the token)
+     *
+     * @return [string] message
+     */
+    public function logout(Request $request)
+    {
+        if (Auth::check()) {
+            Auth::logout();
+        }
+        return redirect(url('login'));
+        
+    }
 }
