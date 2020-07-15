@@ -10,6 +10,7 @@ use Validator;
 use App\BackAccount;
 use App\Recommendation;
 use View;
+use Redirect;
 
 class UserController extends Controller
 {
@@ -124,5 +125,38 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    // user login auth
+    public function login(Request $request)
+    {
+      $credentials = $request->only('email', 'password');
+      $rules = array(
+            'email' => 'required|exists:users',
+            'password' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails())
+           {
+             return Redirect::back()->withInput()->withErrors($validator);
+           } else {
+               if(Auth::attempt($credentials) && Auth::user()->email_verified_at !== NULL){
+                    return redirect('investor-dashboard')->with('status', 'Login Successful!');
+            }
+        else {
+            if(Auth::attempt($credentials) && Auth::user()->email_verified_at == NULL){
+                return Redirect::back()
+                ->withErrors([
+                    'credentials' => 'Email is not verified yet, please check your mail or spam folder!'
+                ]); 
+                }
+              return Redirect::back()
+                ->withErrors([
+                    'credentials' => 'We were unable to sign you in.'
+                ]);
+            }
+         }
     }
 }
