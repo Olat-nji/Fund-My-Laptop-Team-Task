@@ -126,12 +126,18 @@ class PagesController extends Controller
            $requests=FundRequest::where('isFunded',0)->get();
   
         $transactions = Transaction::with(['Request'])->where([['user_id',$user_id],['status','success']])->get();
+        $rate=0;
+        foreach($transactions as $transaction){
+            $rate=$transaction->request->accrual->avg('rate')+$rate;
+
+        }
+        $intrestAverage=$rate/count($transactions);
         $repaymenttotal=0;
         foreach( $transactions as  $transaction){
         $repaymenttotal = array_sum(json_decode( $transaction->request->repayment->pluck('amount_paid')))+$repaymenttotal;       
     }
     
-        return view('investor-dashboard')->with(compact('transactiontotal','user','repaymenttotal','transactions','requests'));
+        return view('investor-dashboard')->with(compact('transactiontotal','user','repaymenttotal','transactions','requests','intrestAverage'));
     
     }
 

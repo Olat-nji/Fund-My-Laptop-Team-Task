@@ -35,7 +35,7 @@
                                 <div style="display: flex;">
                                     <p style="font-size: 10px; line-height: 10px; margin-top: 10px;">₦ {{$request->transaction->sum('amount') }} Funded</p>
                                     <div style="flex: 1"></div>
-                                    <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦{{ $request->amount - $request->transaction->sum('amount') }} Left</p>
+                                    <p style="font-size: 10px; line-height: 10px; margin-top: 10px; margin-right: 15px;"> ₦ {{ $request->amount - $request->transaction->sum('amount') }} Left</p>
                                 </div>
                                 <form action="{{ url('invest') }}" method='POST'>
                                     <input type="hidden" name="amount_invested" value="{{ $request->amount - $request->transaction->sum('amount') }}">
@@ -70,7 +70,7 @@
                         </div>
                         <div class="account__block--details">
                             <small>Remaining Amount</small><br>
-                            <h2><span>INR</span>{{$transactiontotal-$repaymenttotal}}</h2>
+                            <h2><span>NGN</span>{{$transactiontotal-$repaymenttotal}}</h2>
                         </div>
                         <div class="account__block--details">
                             <small>Investments</small><br>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="account__block--details">
                             <small>Average Interest</small><br>
-                            <h2>{{$user->accrual->avg('rate')}}<span>%</span></h2>
+                            <h2>{{$intrestAverage}}<span>%</span></h2>
                         </div>
                     </div>
                     <div class="account__progress">

@@ -102,8 +102,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Blog');
     }
-    public function accrual()
-    {
-        return $this->hasManyThrough('App\Accrual','App\Request');
-    }
+   
 }
