@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-<main class="main-content d-sm-flex ">
+<main class="main-content d-sm-flex " style="padding-top:80px; ">
     <form class="login-box p-md-5 p-2" method="POST">
 
         @csrf
