@@ -38,9 +38,10 @@ class TransactionController extends Controller
      * @param TransactionRequest $request
      * @return JsonResponse
      */
-    public function store(TransactionRequest $request)
+    public function store($user_id,TransactionRequest $request)
     {
-        $user_id = Auth::user()->id;
+        
+        
         $validator = Validator::make($request->all(),
             [
                 'request_id' => 'required|int',

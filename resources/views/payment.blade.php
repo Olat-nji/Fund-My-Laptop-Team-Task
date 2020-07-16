@@ -52,6 +52,8 @@
                                    placeholder="Enter Amount to Donate">
                                    <input  type="hidden" name="request_id"
                                    value="{{ $request->id }}">
+                                   <input  type="hidden" name="user_id"
+                                   value="{{ $user->id }}">
                             <select class="input-group-text" id="chooseCurrency">
                                 <option value="NGN" selected>NGN</option>
                                 <option value="USD">USD</option>

@@ -25,15 +25,16 @@ class InvestController extends Controller
      * Handles comparison of Amounts*
      * @param Request $request
      */
+    
 
     public function index(Request $request)
     {
      
+         
       $request_id = $request->input('request_id');
         $amount_invested = $request->input('amount_invested');
-        
+        $user_id =$request->input('user_id');
         $funder_email = $request->input('email');
-
 
         
             $txref = uniqid(rand(0, 1000));
@@ -43,7 +44,7 @@ class InvestController extends Controller
             $amount = $amount_invested;
             $currency = "NGN";
             $PBFPubKey = "FLWPUBK_TEST-babd6d1a417bdd33d5af0cd1729b36c6-X";
-            $redirect_url = url('invest/redirect/' . $request_id);
+            $redirect_url = url('invest/redirect/' . $request_id.'/'.$user_id);
             curl_setopt_array($curl, array(
                 CURLOPT_URL => "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",
                 CURLOPT_RETURNTRANSFER => true,
@@ -67,14 +68,14 @@ class InvestController extends Controller
 
             if ($err) {
                 // there was an error contacting the rave API
-                return redirect(url('payment/'.$request_id));
+                return view('transaction-status')->with('message',$err);
             }
 
             $transaction = json_decode($response);
 
             if (!$transaction->data && !$transaction->data->link) {
                 // there was an error from the API
-                return redirect(url('payment/'.$request_id));
+                return view('transaction-status')->with('message','API Error!');
             }
 
             // redirect to page so User can pay
@@ -90,12 +91,13 @@ class InvestController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function redirect($request_id, Request $request)
+    public function redirect($request_id,$user_id, Request $request)
     {
+
 
         if (isset($request['cancelled'])) {
 
-            return view('transaction-status')->with('status','failed');
+            return view('transaction-status')->with('message','Transaction Cancelled !');
         }
 
 
@@ -132,6 +134,7 @@ class InvestController extends Controller
             $chargeCurrency = $resp['data']['currency'];
 
             $query = array(
+                
                 "request_id" => $request_id,
                 "transaction_ref" => $ref,
                 "amount" => $chargeAmount,
@@ -142,7 +145,7 @@ class InvestController extends Controller
 
             $data_string = json_encode($query);
             if (($chargeResponsecode == "00" || $chargeResponsecode == "0") && ($chargeCurrency == $currency)) {
-                $store = curl_init(url('transaction/store'));
+                $store = curl_init(url('transaction/store/'.$user_id));
                 curl_setopt($store, CURLOPT_CUSTOMREQUEST, "POST");
                 curl_setopt($store, CURLOPT_POSTFIELDS, $data_string);
                 curl_setopt($store, CURLOPT_RETURNTRANSFER, true);
@@ -151,12 +154,12 @@ class InvestController extends Controller
                 $response = curl_exec($store);
                 curl_close($store);
                 if(json_decode($response,1)['message']=='transaction record created')
-                return view('transaction-status')->with('status','successful');
+                return view('transaction-status')->with('message','Transaction successful !');
                 else{
-                    return view('transaction-status')->with('status','failed');
+                    return view('transaction-status')->with('message','Transaction recording failed !');
                 }
             } else {
-                return view('transaction-status')->with('status','failed');
+                return view('transaction-status')->with('message','Transaction failed !');
             }
         }
 
