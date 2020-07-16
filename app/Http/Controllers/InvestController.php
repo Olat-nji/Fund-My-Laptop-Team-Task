@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Request as FundRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-
+use Validator;
+use Redirect;
 class InvestController extends Controller
 {
     /*
@@ -30,7 +31,15 @@ class InvestController extends Controller
     public function index(Request $request)
     {
      
-         
+        $validator = Validator::make($request->all(),
+        [
+            'request_id' => 'required|int',
+            'amount_invested' => 'required|int',
+            'email' => 'required'
+        ]);
+    if ($validator->fails()) {
+        return Redirect::back()->withInput()->withErrors($validator);
+    }
       $request_id = $request->input('request_id');
         $amount_invested = $request->input('amount_invested');
         $user_id =$request->input('user_id');
